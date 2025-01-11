@@ -14,12 +14,16 @@ class ShowUserStatsController extends AbstractListController
 {
 
     public $serializer = UserStatSerializer::class;
+    public $include = ['baseStat'];
 
     protected function data(ServerRequestInterface $request, Document $document)
     {
         $actor = RequestUtil::getActor($request);
         $userId = Arr::get($request->getQueryParams(), 'userId');
 
-        return UserStat::query()->where('user_id', $userId)->get();
+        return UserStat::query()
+            ->with('baseStat')
+            ->where('user_id', $userId)
+            ->get();
     }
 }

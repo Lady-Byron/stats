@@ -36,9 +36,10 @@ export default class AddNewStat extends Component<AddNewStatAttrs> {
           type="url"
         />
         <button
+          disabled={this.stat_name() === '' && this.stat_img() === ''}
           onclick={() => {
             this.attrs.createStat(this.stat_name(), this.stat_img())
-            this.attrs.refetch()
+            window.location.reload();
           }}
           class="Button Button--primary">
           {app.translator.trans('justoverclock-stats.admin.addStatBtn')}

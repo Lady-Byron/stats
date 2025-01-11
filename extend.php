@@ -11,13 +11,15 @@
 
 namespace Justoverclock\Stats;
 
+use Flarum\Api\Serializer\UserSerializer;
 use Flarum\Extend;
-use Flarum\User\User;
 use Justoverclock\Stats\Controller\BaseStats\CreateBaseStatController;
 use Justoverclock\Stats\Controller\BaseStats\DeleteBaseStatController;
 use Justoverclock\Stats\Controller\BaseStats\GetBaseStatsController;
 use Justoverclock\Stats\Controller\UserStats\ShowUserStatsController;
 use Justoverclock\Stats\Controller\UserStats\UpdateUserStatController;
+use Justoverclock\Stats\Listener\AddStatsToNewUsers;
+use Justoverclock\Stats\Model\BaseStat;
 use Justoverclock\Stats\Model\UserStat;
 
 return [
@@ -38,4 +40,13 @@ return [
 
     (new Extend\Settings())
         ->serializeToForum('justoverclock-stats.baseStats', 'justoverclock-stats.baseStats'),
+
+    (new Extend\Model(UserStat::class))
+        ->belongsTo('baseStat', BaseStat::class, 'base_stat_id'),
+
+    (new Extend\ApiSerializer(UserSerializer::class))
+        ->attributes(AddUserAttributes::class),
+
+    (new Extend\Event())
+        ->subscribe(AddStatsToNewUsers::class),
 ];

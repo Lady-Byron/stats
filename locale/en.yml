@@ -10,5 +10,8 @@ justoverclock-stats:
     failStatCreated: An error has occurred during the creation of the stat
     successStatDeleted: Stat deleted successfully
     failStatDeleted: An error has occurred during the deletion of the stat
+    successStatEdited: Stat successfully updated
 
   forum:
+    save: Save
+    editStatInputPlaceholder: Please insert a numeric value

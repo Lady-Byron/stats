@@ -21,7 +21,7 @@ class UpdateUserStatController extends AbstractShowController
         $actor = RequestUtil::getActor($request);
 
         $data = $request->getParsedBody();
-        $statId = Arr::get($data, 'data.id');
+        $statId = Arr::get($request->getQueryParams(), 'id');
         $newValue = Arr::get($data, 'data.attributes.value');
 
         $userStat = UserStat::query()

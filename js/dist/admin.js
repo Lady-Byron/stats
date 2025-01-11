@@ -63,9 +63,10 @@ var AddNewStat = /*#__PURE__*/function (_Component) {
       className: "FormControl",
       type: "url"
     }), m("button", {
+      disabled: this.stat_name() === '' && this.stat_img() === '',
       onclick: function onclick() {
         _this2.attrs.createStat(_this2.stat_name(), _this2.stat_img());
-        _this2.attrs.refetch();
+        window.location.reload();
       },
       "class": "Button Button--primary"
     }, flarum_admin_app__WEBPACK_IMPORTED_MODULE_2___default().translator.trans('justoverclock-stats.admin.addStatBtn')));
