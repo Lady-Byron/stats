@@ -1,0 +1,14 @@
+justoverclock-stats:
+  admin:
+    permission:
+      editStat: Can edit user stat
+    baseStatInputName: Stat name
+    baseStatInputImg: image URL
+    addStatBtn: Create stat
+    actualStatsTitle: "Actual Stats created:"
+    successStatCreated: Stat created successfully
+    failStatCreated: An error has occurred during the creation of the stat
+    successStatDeleted: Stat deleted successfully
+    failStatDeleted: An error has occurred during the deletion of the stat
+
+  forum:
