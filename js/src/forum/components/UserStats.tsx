@@ -4,8 +4,10 @@ import Mithril from "mithril";
 import app from 'flarum/forum/app'
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator'
 import User from "flarum/common/models/User";
-import {ApiResponse, UserStat} from "./types";
+import {ApiResponse, BaseStat, UserStat} from "./types";
 import EditModal from "./EditModal/EditModal";
+import Tooltip from 'flarum/common/components/Tooltip'
+import SingleUserStat from "./SingleUserStat";
 
 interface UserStatsAttrs {
   user: User
@@ -25,36 +27,49 @@ export default class UserStats extends Component<UserStatsAttrs> {
     if (!this.userStat) {
       return <LoadingIndicator />;
     }
-
+    const moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
+    const storiesName = app.translator.trans('justoverclock-stats.forum.storyCount');
+    const userMoney = this.attrs.user.data.attributes.money ?? 0
+    const userStoriesCount = this.attrs.user.data.attributes.storyCount ?? 0
+    const moneyImg =  `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/money1.png`
+    const storiesImg =  `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/storiespng.png`
     const canEditStats: boolean = this.attrs.user.data.attributes?.canEditStats
 
     return (
-      <div className='user-stats-fe'>
-        {this.userStat.data && this.userStat.data.map((stat: UserStat) => {
-          const baseStat = this.userStat && this.userStat.included.find(
-            (baseStat) => baseStat.id.toString() === stat.attributes.baseStatId.toString()
-          );
-          const imgPath = baseStat ? baseStat.attributes.img : "";
+      <div className='show-stats-wrapper'>
+        <div className='user-stats-fe show-stats-container'>
+          <SingleUserStat
+            name={moneyName}
+            img={moneyImg}
+            alt={moneyName}
+            value={userMoney}
+          />
+          <SingleUserStat
+            name={storiesName}
+            img={storiesImg}
+            alt={storiesName}
+            value={userStoriesCount}
+          />
+          {this.userStat.data && this.userStat.data.map((stat: UserStat) => {
+            const baseStat: BaseStat | null | undefined = this.userStat && this.userStat.included.find(
+              baseStat => baseStat.id.toString() === stat.attributes.baseStatId.toString()
+            );
+            const imgPath = baseStat ? baseStat.attributes.img : "";
 
-          return (
-            <div
-              className='stat'
-              key={stat.id}
-              onclick={() => {
-                canEditStats
-                  ? this.openEditModal(stat, baseStat, this.attrs.user)
-                  : null
-              }}
-            >
-              <div className='stat-value'>
-                <img src={imgPath} alt=''/>
-                <p class='statvalue'>
-                  {stat.attributes.value}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+
+            return (
+              <SingleUserStat
+                name={baseStat?.attributes.name}
+                img={imgPath}
+                alt={baseStat?.attributes.name}
+                value={stat.attributes.value}
+                onclick={() => {
+                  canEditStats ? this.openEditModal(stat, baseStat, this.attrs.user) : null;
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
@@ -80,7 +95,7 @@ export default class UserStats extends Component<UserStatsAttrs> {
         }
       }
     }).then(() => {
-      app.alerts.show({ type: 'success' }, app.translator.trans('justoverclock-stats.forum.successStatEdited'))
+      app.alerts.show({type: 'success'}, app.translator.trans('justoverclock-stats.forum.successStatEdited'))
     })
   }
 

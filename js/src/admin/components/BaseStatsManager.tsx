@@ -4,6 +4,7 @@ import ExtensionPage, {ExtensionPageAttrs} from "flarum/admin/components/Extensi
 import AddNewStat from "./AddNewStat";
 import CreatedStats from "./CreatedStats";
 import {BaseStat, BaseStatsResponse} from "./types";
+import MoneyAndStoriesImages from "./MoneyAndStoriesImages";
 
 export default class BaseStatsManager extends ExtensionPage {
   public actualStats: BaseStat[] = [];
@@ -24,6 +25,7 @@ export default class BaseStatsManager extends ExtensionPage {
           actualStats={this.actualStats}
           deleteStat={this.deleteStat.bind(this)}
         />
+        <MoneyAndStoriesImages />
       </div>
     );
   }

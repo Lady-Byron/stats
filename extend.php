@@ -39,7 +39,8 @@ return [
         ->get('/user-stats/{userId}', 'user-stats.show', ShowUserStatsController::class),
 
     (new Extend\Settings())
-        ->serializeToForum('justoverclock-stats.baseStats', 'justoverclock-stats.baseStats'),
+        ->serializeToForum('justoverclock-stats.baseStats', 'justoverclock-stats.baseStats')
+        ->serializeToForum('justoverclock-stats.moneyImg', 'justoverclock-stats.moneyImg'),
 
     (new Extend\Model(UserStat::class))
         ->belongsTo('baseStat', BaseStat::class, 'base_stat_id'),

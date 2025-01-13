@@ -5,7 +5,9 @@ import { extend } from 'flarum/common/extend';
 import UserStats from "./components/UserStats";
 
 app.initializers.add('justoverclock/stats', () => {
-  extend(UserCard.prototype, 'infoItems', function (items){
-    items.add('userStats', <UserStats user={this.attrs.user} />, -100);
+  extend(UserCard.prototype, 'view', function (vdom){
+    if (vdom.children && vdom.children.splice) {
+      vdom.children.splice(1,0, <UserStats user={this.attrs.user} />)
+    }
   })
 });

@@ -88,6 +88,60 @@ var EditModal = /*#__PURE__*/function (_Modal) {
 
 /***/ }),
 
+/***/ "./src/forum/components/SingleUserStat.tsx":
+/*!*************************************************!*\
+  !*** ./src/forum/components/SingleUserStat.tsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SingleUserStat)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_components_Tooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Tooltip */ "flarum/common/components/Tooltip");
+/* harmony import */ var flarum_common_components_Tooltip__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Tooltip__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SingleUserStat = /*#__PURE__*/function (_Component) {
+  function SingleUserStat() {
+    return _Component.apply(this, arguments) || this;
+  }
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(SingleUserStat, _Component);
+  var _proto = SingleUserStat.prototype;
+  _proto.oninit = function oninit(vnode) {
+    _Component.prototype.oninit.call(this, vnode);
+  };
+  _proto.view = function view(vnode) {
+    var _this = this;
+    return m("div", {
+      className: "stat",
+      onclick: function onclick() {
+        _this.attrs.onclick ? _this.attrs.onclick() : null;
+      }
+    }, m("div", {
+      className: "stat-value"
+    }, m((flarum_common_components_Tooltip__WEBPACK_IMPORTED_MODULE_2___default()), {
+      text: this.attrs.name
+    }, m("img", {
+      src: this.attrs.img,
+      alt: this.attrs.alt
+    })), m("p", {
+      className: "stat-desc"
+    }, this.attrs.name), m("p", {
+      "class": "statvalue"
+    }, this.attrs.value)));
+  };
+  return SingleUserStat;
+}((flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default()));
+
+
+/***/ }),
+
 /***/ "./src/forum/components/UserStats.tsx":
 /*!********************************************!*\
   !*** ./src/forum/components/UserStats.tsx ***!
@@ -107,8 +161,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/LoadingIndicator */ "flarum/common/components/LoadingIndicator");
 /* harmony import */ var flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _EditModal_EditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditModal/EditModal */ "./src/forum/components/EditModal/EditModal.tsx");
+/* harmony import */ var _SingleUserStat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SingleUserStat */ "./src/forum/components/SingleUserStat.tsx");
 
 // @ts-nocheck
+
 
 
 
@@ -132,33 +188,48 @@ var UserStats = /*#__PURE__*/function (_Component) {
   };
   _proto.view = function view(vnode) {
     var _this$attrs$user$data,
+      _this$attrs$user$data2,
+      _this$attrs$user$data3,
       _this2 = this;
     if (!this.userStat) {
       return m((flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3___default()), null);
     }
-    var canEditStats = (_this$attrs$user$data = this.attrs.user.data.attributes) == null ? void 0 : _this$attrs$user$data.canEditStats;
+    var moneyName = flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().forum.attribute('antoinefr-money.moneyname') || '[money]';
+    var storiesName = flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().translator.trans('justoverclock-stats.forum.storyCount');
+    var userMoney = (_this$attrs$user$data = this.attrs.user.data.attributes.money) != null ? _this$attrs$user$data : 0;
+    var userStoriesCount = (_this$attrs$user$data2 = this.attrs.user.data.attributes.storyCount) != null ? _this$attrs$user$data2 : 0;
+    var moneyImg = flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().forum.attribute('baseUrl') + "/assets/extensions/justoverclock-stats/money1.png";
+    var storiesImg = flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().forum.attribute('baseUrl') + "/assets/extensions/justoverclock-stats/storiespng.png";
+    var canEditStats = (_this$attrs$user$data3 = this.attrs.user.data.attributes) == null ? void 0 : _this$attrs$user$data3.canEditStats;
     return m("div", {
-      className: "user-stats-fe"
-    }, this.userStat.data && this.userStat.data.map(function (stat) {
+      className: "show-stats-wrapper"
+    }, m("div", {
+      className: "user-stats-fe show-stats-container"
+    }, m(_SingleUserStat__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      name: moneyName,
+      img: moneyImg,
+      alt: moneyName,
+      value: userMoney
+    }), m(_SingleUserStat__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      name: storiesName,
+      img: storiesImg,
+      alt: storiesName,
+      value: userStoriesCount
+    }), this.userStat.data && this.userStat.data.map(function (stat) {
       var baseStat = _this2.userStat && _this2.userStat.included.find(function (baseStat) {
         return baseStat.id.toString() === stat.attributes.baseStatId.toString();
       });
       var imgPath = baseStat ? baseStat.attributes.img : "";
-      return m("div", {
-        className: "stat",
-        key: stat.id,
+      return m(_SingleUserStat__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        name: baseStat == null ? void 0 : baseStat.attributes.name,
+        img: imgPath,
+        alt: baseStat == null ? void 0 : baseStat.attributes.name,
+        value: stat.attributes.value,
         onclick: function onclick() {
           canEditStats ? _this2.openEditModal(stat, baseStat, _this2.attrs.user) : null;
         }
-      }, m("div", {
-        className: "stat-value"
-      }, m("img", {
-        src: imgPath,
-        alt: ""
-      }), m("p", {
-        "class": "statvalue"
-      }, stat.attributes.value)));
-    }));
+      });
+    })));
   };
   _proto.openEditModal = function openEditModal(stat, baseStat, user) {
     flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default().modal.show(_EditModal_EditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -222,10 +293,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('justoverclock/stats', function () {
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_forum_components_UserCard__WEBPACK_IMPORTED_MODULE_1___default().prototype), 'infoItems', function (items) {
-    items.add('userStats', m(_components_UserStats__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      user: this.attrs.user
-    }), -100);
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_forum_components_UserCard__WEBPACK_IMPORTED_MODULE_1___default().prototype), 'view', function (vdom) {
+    if (vdom.children && vdom.children.splice) {
+      vdom.children.splice(1, 0, m(_components_UserStats__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        user: this.attrs.user
+      }));
+    }
   });
 });
 
@@ -272,6 +345,17 @@ module.exports = flarum.core.compat['common/components/LoadingIndicator'];
 
 "use strict";
 module.exports = flarum.core.compat['common/components/Modal'];
+
+/***/ }),
+
+/***/ "flarum/common/components/Tooltip":
+/*!******************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Tooltip']" ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = flarum.core.compat['common/components/Tooltip'];
 
 /***/ }),
 

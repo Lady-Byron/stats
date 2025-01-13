@@ -95,6 +95,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _AddNewStat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddNewStat */ "./src/admin/components/AddNewStat.tsx");
 /* harmony import */ var _CreatedStats__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreatedStats */ "./src/admin/components/CreatedStats.tsx");
+/* harmony import */ var _MoneyAndStoriesImages__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MoneyAndStoriesImages */ "./src/admin/components/MoneyAndStoriesImages.tsx");
+
 
 
 
@@ -126,7 +128,7 @@ var BaseStatsManager = /*#__PURE__*/function (_ExtensionPage) {
     }), m(_CreatedStats__WEBPACK_IMPORTED_MODULE_4__["default"], {
       actualStats: this.actualStats,
       deleteStat: this.deleteStat.bind(this)
-    }));
+    }), m(_MoneyAndStoriesImages__WEBPACK_IMPORTED_MODULE_5__["default"], null));
   };
   _proto.createStat = function createStat(name, img) {
     flarum_admin_app__WEBPACK_IMPORTED_MODULE_1___default().request({
@@ -237,6 +239,50 @@ var CreatedStats = /*#__PURE__*/function (_Component) {
     })));
   };
   return CreatedStats;
+}((flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default()));
+
+
+/***/ }),
+
+/***/ "./src/admin/components/MoneyAndStoriesImages.tsx":
+/*!********************************************************!*\
+  !*** ./src/admin/components/MoneyAndStoriesImages.tsx ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MoneyAndStoriesImages)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_admin_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/admin/app */ "flarum/admin/app");
+/* harmony import */ var flarum_admin_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_admin_app__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var MoneyAndStoriesImages = /*#__PURE__*/function (_Component) {
+  function MoneyAndStoriesImages() {
+    return _Component.apply(this, arguments) || this;
+  }
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(MoneyAndStoriesImages, _Component);
+  var _proto = MoneyAndStoriesImages.prototype;
+  _proto.oninit = function oninit(vnode) {
+    _Component.prototype.oninit.call(this, vnode);
+  };
+  _proto.view = function view(vnode) {
+    return m("div", {
+      className: "img-conf-container"
+    }, m("h3", null, "Money and Stories images:"), m("input", {
+      name: "money_img",
+      placeholder: flarum_admin_app__WEBPACK_IMPORTED_MODULE_2___default().translator.trans('justoverclock-stats.admin.moneyImgInputName'),
+      className: "FormControl",
+      type: "text"
+    }));
+  };
+  return MoneyAndStoriesImages;
 }((flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default()));
 
 
