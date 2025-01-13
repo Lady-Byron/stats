@@ -6,7 +6,6 @@ import LoadingIndicator from 'flarum/common/components/LoadingIndicator'
 import User from "flarum/common/models/User";
 import {ApiResponse, BaseStat, UserStat} from "./types";
 import EditModal from "./EditModal/EditModal";
-import Tooltip from 'flarum/common/components/Tooltip'
 import SingleUserStat from "./SingleUserStat";
 
 interface UserStatsAttrs {
@@ -27,26 +26,27 @@ export default class UserStats extends Component<UserStatsAttrs> {
     if (!this.userStat) {
       return <LoadingIndicator />;
     }
+    const { data } = this.attrs.user
     const moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
     const storiesName = app.translator.trans('justoverclock-stats.forum.storyCount');
-    const userMoney = this.attrs.user.data.attributes.money ?? 0
-    const userStoriesCount = this.attrs.user.data.attributes.storyCount ?? 0
+    const userMoney = data.attributes.money ?? 0
+    const userStoriesCount = data.attributes.storyCount ?? 0
     const moneyImg =  `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/money1.png`
     const storiesImg =  `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/storiespng.png`
-    const canEditStats: boolean = this.attrs.user.data.attributes?.canEditStats
+    const canEditStats: boolean = data.attributes?.canEditStats
 
     return (
       <div className='show-stats-wrapper'>
-        <div className='user-stats-fe show-stats-container'>
+        <div className='user-stats-fe container show-stats-container'>
           <SingleUserStat
             name={moneyName}
-            img={moneyImg}
+            img={app.forum.attribute('justoverclock-stats.moneyImg') || moneyImg}
             alt={moneyName}
             value={userMoney}
           />
           <SingleUserStat
             name={storiesName}
-            img={storiesImg}
+            img={app.forum.attribute('justoverclock-stats.storiesImg') || storiesImg}
             alt={storiesName}
             value={userStoriesCount}
           />

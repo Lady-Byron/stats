@@ -4,6 +4,7 @@ justoverclock-stats:
       editStat: Can edit user stat
     baseStatInputName: Stat name
     moneyImgInputName: Money image png (URL)
+    storiesImgInputName: Stories image png (URL)
     baseStatInputImg: image URL
     addStatBtn: Create stat
     actualStatsTitle: "Actual Stats created:"

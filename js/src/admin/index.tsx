@@ -13,5 +13,5 @@ app.initializers.add('justoverclock/stats', () => {
         allowGuest: false,
       },
       'moderate'
-    );
+    )
 });

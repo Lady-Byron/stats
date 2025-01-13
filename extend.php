@@ -40,7 +40,8 @@ return [
 
     (new Extend\Settings())
         ->serializeToForum('justoverclock-stats.baseStats', 'justoverclock-stats.baseStats')
-        ->serializeToForum('justoverclock-stats.moneyImg', 'justoverclock-stats.moneyImg'),
+        ->serializeToForum('justoverclock-stats.moneyImg', 'justoverclock-stats.moneyImg')
+        ->serializeToForum('justoverclock-stats.storiesImg', 'justoverclock-stats.storiesImg'),
 
     (new Extend\Model(UserStat::class))
         ->belongsTo('baseStat', BaseStat::class, 'base_stat_id'),

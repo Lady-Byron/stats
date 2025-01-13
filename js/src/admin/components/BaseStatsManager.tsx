@@ -25,7 +25,11 @@ export default class BaseStatsManager extends ExtensionPage {
           actualStats={this.actualStats}
           deleteStat={this.deleteStat.bind(this)}
         />
-        <MoneyAndStoriesImages />
+        <MoneyAndStoriesImages
+          moneySetting={this.setting('justoverclock-stats.moneyImg')}
+          storiesSetting={this.setting('justoverclock-stats.storiesImg')}
+          onSave={this.saveSettings.bind(this)}
+        />
       </div>
     );
   }
