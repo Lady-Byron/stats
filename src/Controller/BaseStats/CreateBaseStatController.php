@@ -38,15 +38,15 @@ class CreateBaseStatController extends AbstractCreateController
         $stat->img = Arr::get($data, 'data.attributes.stat_img');
         $stat->save();
 
-        $users = User::all();
-
-        foreach ($users as $user) {
-            $userStat = new UserStat();
-            $userStat->user_id = $user->id;
-            $userStat->base_stat_id = $stat->id;
-            $userStat->value = 0;
-            $userStat->save();
-        }
+        User::query()->chunk(300, function ($users) use ($stat) {
+            foreach ($users as $user) {
+                $userStat = new UserStat();
+                $userStat->user_id = $user->id;
+                $userStat->base_stat_id = $stat->id;
+                $userStat->value = 0;
+                $userStat->save();
+            }
+        });
 
         return $stat;
     }
