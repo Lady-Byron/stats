@@ -7,10 +7,8 @@
 }
 
 .user-stats-fe {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 
   .stat {
     display: flex;
@@ -54,6 +52,7 @@
     align-items: center;
     gap: 2rem;
     flex-wrap: wrap;
+    min-width: 400px;
   }
 }
 
@@ -76,4 +75,32 @@ p.statvalue {
 p.stat-desc {
   margin-top: 8px;
   margin-bottom: 0;
+}
+
+.stat {
+  color: @primary-color;
+}
+
+.stats-svg {
+  width: 50px;
+  height: 50px;
+}
+
+.stats-btn-popover {
+  position: absolute;
+  left: 21%;
+  top: 200px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .stats-btn-popover {
+    position: absolute;
+    left: 2%;
+    top: 50px;
+  }
+}
+
+.stat-value {
+  text-align: center;
 }

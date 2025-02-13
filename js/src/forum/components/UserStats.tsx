@@ -37,7 +37,7 @@ export default class UserStats extends Component<UserStatsAttrs> {
 
     return (
       <div className='show-stats-wrapper'>
-        <div className='user-stats-fe container show-stats-container'>
+        <div className='user-stats-fe show-stats-container'>
           <SingleUserStat
             name={moneyName}
             img={app.forum.attribute('justoverclock-stats.moneyImg') || moneyImg}
