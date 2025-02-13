@@ -24,7 +24,7 @@ export default class UserStats extends Component<UserStatsAttrs> {
 
   view(vnode: Mithril.Vnode<ComponentAttrs, this>): Mithril.Children {
     if (!this.userStat) {
-      return <LoadingIndicator />;
+      return <div></div>;
     }
     const { data } = this.attrs.user
     const moneyName = app.forum.attribute('antoinefr-money.moneyname') || '[money]';
