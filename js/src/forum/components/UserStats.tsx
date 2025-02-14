@@ -27,7 +27,7 @@ export default class UserStats extends Component<UserStatsAttrs> {
       return <div></div>;
     }
     const { data } = this.attrs.user
-    const moneyName = app.forum.attribute('antoinefr-money.moneyname') || 'Money';
+    const moneyName = app.translator.trans('justoverclock-stats.forum.moneyName');
     const storiesName = app.translator.trans('justoverclock-stats.forum.storyCount');
     const userMoney = data.attributes.money ?? 0
     const userStoriesCount = data.attributes.storyCount ?? 0
