@@ -12,10 +12,19 @@ export default class StatsModal extends Modal {
     return ``;
   }
 
+  closeModal() {
+    this.hide()
+  }
+
   content(): Mithril.Children {
     return (
       <div className="edit-stat-modal-container">
         <UserStats user={this.attrs.user} />
+        <button
+          onclick={() => this.closeModal()}
+          class='Button Button--primary'>
+          Close
+        </button>
       </div>
     );
   }
