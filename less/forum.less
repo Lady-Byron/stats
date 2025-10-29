@@ -123,14 +123,20 @@ p.stat-desc {
   justify-content: center;
 }
 
-/* 统一主/副色（可改成你站的主题变量） */
-.stat i.fa-duotone {
-  /* 主色取 currentColor；如果你想强制：--fa-primary-color: var(--primary) */
-  --fa-secondary-color: var(--muted);           /* 副色 */
-  --fa-secondary-opacity: .55;                  /* 副色透明度 */
+/* 仅在统计弹窗里把图标改为副色——不影响站内其它图标 */
+.stats-modal .user-stats-fe .stat i,
+.edit-stat-modal-container .user-stats-fe .stat i {
+  /* Solid / Regular / Light / Brands 走 color */
+  color: @secondary-color;        // Flarum 主题的“副色调”变量
 }
 
-/* 如果希望所有图标都用主题主色 */
-.stat i { color: var(--primary); }
+/* Duotone 两层颜色单独控制（若你用 FA Pro 双层） */
+.stats-modal .user-stats-fe .stat i.fa-duotone,
+.edit-stat-modal-container .user-stats-fe .stat i.fa-duotone {
+  --fa-primary-color:   @secondary-color;            /* 主层=副色 */
+  --fa-secondary-color: fade(@secondary-color, 55%); /* 副层=副色的 55% 透明 */
+  --fa-secondary-opacity: 1;                         /* 或者改这里的透明度 */
+}
+
 
 
