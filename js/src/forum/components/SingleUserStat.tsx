@@ -4,9 +4,8 @@ import Tooltip from 'flarum/common/components/Tooltip';
 
 export interface SingleUserStatAttrs {
   name: string;
-  /** 图片可选：不传时只显示文字与数值 */
-  img?: string;
-  alt?: string;
+  img: string;              // 恢复为必填
+  alt: string;
   value: string | number;
   onclick?: () => void;
 }
@@ -26,14 +25,13 @@ export default class SingleUserStat extends Component<SingleUserStatAttrs> {
       >
         <div className="stat-value">
           <Tooltip text={this.attrs.name}>
-            {this.attrs.img ? (
-              <img src={this.attrs.img} alt={this.attrs.alt || this.attrs.name} />
-            ) : null}
+            <img src={this.attrs.img} alt={this.attrs.alt} />
           </Tooltip>
           <p className="stat-desc">{this.attrs.name}</p>
-          <p className="statvalue">{this.attrs.value}</p>
+          <p className="statvalue">{String(this.attrs.value)}</p>
         </div>
       </div>
     );
   }
 }
+
