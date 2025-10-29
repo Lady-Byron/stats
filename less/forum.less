@@ -113,3 +113,24 @@ p.stat-desc {
 
 .darkenBackground { .container { position: relative; } }
 
+/* 让 <i> 像图片一样 40x40 居中 */
+.stat i {
+  font-size: 40px;
+  width: 40px; height: 40px;
+  line-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 统一主/副色（可改成你站的主题变量） */
+.stat i.fa-duotone {
+  /* 主色取 currentColor；如果你想强制：--fa-primary-color: var(--primary) */
+  --fa-secondary-color: var(--muted);           /* 副色 */
+  --fa-secondary-opacity: .55;                  /* 副色透明度 */
+}
+
+/* 如果希望所有图标都用主题主色 */
+.stat i { color: var(--primary); }
+
+
