@@ -13,11 +13,14 @@ justoverclock-stats:
     successStatDeleted: Stat deleted successfully
     failStatDeleted: An error has occurred during the deletion of the stat
 
-
   forum:
     moneyName: Money
     storiesName: Stories
     storyCount: Stories
+    topics: Topics
+    replies: Replies
+    following: Following
+    followers: Followers
     successStatEdited: Stat successfully updated
     save: Save
     editStatInputPlaceholder: Please insert a numeric value
