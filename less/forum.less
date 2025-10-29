@@ -1,4 +1,3 @@
-
 .UserCard-info {
   .item-userStats {
     display: block;
@@ -56,14 +55,24 @@
   }
 }
 
+/* ====== 在用户卡片隐藏：money / topics / replies / following / followers ====== */
+/* 保留 expLevel（不加入选择器） */
 .UserCard-profile {
   ul.UserCard-info {
-    li.item-money {
-      display: none;
-    }
-    li.item-storiesCount {
-      display: none;
-    }
+    /* money：原有 */
+    li.item-money { display: none; }
+    /* stories：如已不用，可保留不影响 */
+    li.item-storiesCount { display: none; }
+
+    /* 核心：主题与回复（Flarum 核心 infoItems 键一般是 discussions / posts） */
+    li.item-discussions { display: none; }
+    li.item-posts { display: none; }
+
+    /* 关注/粉丝：不同扩展命名略有差异，常见 followers / following。
+       这里同时做一个宽松的兜底匹配：包含 'item-follow' 的都隐藏。 */
+    li.item-followers,
+    li.item-following,
+    li[class*='item-follow'] { display: none; }
   }
 }
 
