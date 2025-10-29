@@ -138,23 +138,20 @@ p.stat-desc {
   --fa-secondary-opacity: 1;
 }
 
-/* 统计按钮：长方形、主色背景、图标更大 */
+/* 小号长方形按钮 */
 .stats-btn-popover {
   position: absolute;
-  left: 46px;      // 你现有的定位就好，按需微调
+  left: 46px;      // 你当前的定位，如需微调再改
   top: 145px;
   z-index: 30;
 
-  /* 尺寸：长方形 */
-  width: 64px;     // ← 改宽度
-  height: 40px;    // ← 改高度
-  border-radius: 12px;  // 若想更圆润可用 9999px 变成胶囊
-
+  width: 52px;     // ← 从 64 缩到 52
+  height: 32px;    // ← 从 40 缩到 32
+  border-radius: 10px;    // 如果要“胶囊”外观可用 9999px
   display: grid;
   place-items: center;
 
-  /* 背景 = 站点主色 */
-  background: @primary-color;
+  background: @primary-color;        // 背景=主色（保持不变）
   box-shadow: 0 2px 8px rgba(0,0,0,.18);
   cursor: pointer;
   transition: transform .12s ease, box-shadow .12s ease;
@@ -164,26 +161,22 @@ p.stat-desc {
   box-shadow: 0 6px 16px rgba(0,0,0,.22);
 }
 
-/* 图标：更大；颜色与主色形成高对比（白色） */
+/* 图标也相应缩小一点 */
 .stats-btn-popover .stats-btn-icon {
-  font-size: 24px;        // ← 放大图标
+  font-size: 20px;   // ← 从 24 缩到 20
   line-height: 1;
-  color: #fff;            // 非 duotone 图标（solid/regular）
+  color: #fff;
 }
-
-/* Duotone：两层都用白色，副层略淡，保证可读性 */
 .stats-btn-popover .stats-btn-icon.fa-duotone {
   --fa-primary-color:   #fff;
-  --fa-secondary-color: fade(#fff, 70%);  /* 也可用 #fff；70% 更柔和 */
+  --fa-secondary-color: fade(#fff, 70%);
   --fa-secondary-opacity: 1;
 }
 
-/* 其他布局下的备用定位保留（如有） */
-.UserCard--popover .stats-btn-popover { left: 50px; top: 120px; }
-
+/* 移动端再小一号（可选） */
 @media (max-width: 600px) {
-  .stats-btn-popover { width: 56px; height: 36px; left: 2%; top: 2%; }
-  .stats-btn-icon   { font-size: 22px; }
+  .stats-btn-popover { width: 48px; height: 30px; }
+  .stats-btn-popover .stats-btn-icon { font-size: 18px; }
 }
 
 
