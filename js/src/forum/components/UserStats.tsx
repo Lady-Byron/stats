@@ -25,11 +25,12 @@ export default class UserStats extends Component<UserStatsAttrs> {
     const a = (data && data.attributes) || {};
     const has = (k: string) => Object.prototype.hasOwnProperty.call(a, k);
 
-    const moneyName     = app.translator.trans('justoverclock-stats.forum.moneyName') || 'Money';
-    const topicsName    = 'Topics';
-    const repliesName   = 'Replies';
-    const followingName = 'Following';
-    const followersName = 'Followers';
+    const moneyName     = app.translator.trans('justoverclock-stats.forum.moneyName');
+    const topicsName    = app.translator.trans('justoverclock-stats.forum.topics');
+    const repliesName   = app.translator.trans('justoverclock-stats.forum.replies');
+    const followingName = app.translator.trans('justoverclock-stats.forum.following');
+    const followersName = app.translator.trans('justoverclock-stats.forum.followers');
+
 
     const canEditStats: boolean = !!a.canEditStats;
 
