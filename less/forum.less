@@ -65,8 +65,8 @@
     li.item-storiesCount { display: none; }
 
     /* 主题 / 回复：根据你现场的实际类名 */
-    li.item-discussion-count { display: none; }  /* ← 新增：你截图里的类名 */
-    li.item-comment-count    { display: none; }  /* ← 新增：你截图里的类名 */
+    li.item-discussion-count { display: none; }
+    li.item-comment-count    { display: none; }
     /* 兼容其他主题/扩展可能的键名 */
     li.item-discussions { display: none; }
     li.item-posts       { display: none; }
@@ -94,6 +94,7 @@ p.stat-desc {
 
 .stats-svg { width: 40px; height: 40px; }
 
+/* 旧按钮定位（保留以防别处依赖，后面会用更高优先级的覆盖） */
 .stats-btn-popover {
   position: absolute;
   left: 46px;
@@ -126,17 +127,69 @@ p.stat-desc {
 /* 仅在统计弹窗里把图标改为副色——不影响站内其它图标 */
 .stats-modal .user-stats-fe .stat i,
 .edit-stat-modal-container .user-stats-fe .stat i {
-  /* Solid / Regular / Light / Brands 走 color */
-  color: @secondary-color;        // Flarum 主题的“副色调”变量
+  color: @secondary-color;
 }
 
-/* Duotone 两层颜色单独控制（若你用 FA Pro 双层） */
+/* Duotone 两层颜色（只作用在弹窗图标） */
 .stats-modal .user-stats-fe .stat i.fa-duotone,
 .edit-stat-modal-container .user-stats-fe .stat i.fa-duotone {
-  --fa-primary-color:   @secondary-color;            /* 主层=副色 */
-  --fa-secondary-color: fade(@secondary-color, 55%); /* 副层=副色的 55% 透明 */
-  --fa-secondary-opacity: 1;                         /* 或者改这里的透明度 */
+  --fa-primary-color:   @secondary-color;
+  --fa-secondary-color: fade(@secondary-color, 55%);
+  --fa-secondary-opacity: 1;
 }
 
+/* =========================
+   追加：按钮定位与配色（覆盖旧规则）
+   ========================= */
+
+/* 头像容器相对定位，供按钮绝对定位参照 */
+.UserCard .UserCard-avatar { position: relative; }
+
+/* 新按钮：水平居中，略偏下 */
+.UserCard .UserCard-avatar .stats-btn-popover {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;              /* 负值=头像外侧稍下；正值=头像内侧靠下 */
+  z-index: 2;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: fade(@body-color, 6%);
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+/* 悬浮卡中的微调 */
+.UserCard--popover .UserCard-avatar .stats-btn-popover {
+  bottom: -8px;
+}
+
+/* 悬浮交互 */
+.UserCard .UserCard-avatar .stats-btn-popover:hover {
+  transform: translateX(-50%) translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.20);
+}
+
+/* 按钮内 FA 图标尺寸与副色 */
+.stats-btn-popover .stats-btn-icon {
+  font-size: 20px;
+  line-height: 1;
+  color: @secondary-color;
+}
+.stats-btn-popover .stats-btn-icon.fa-duotone {
+  --fa-primary-color:   @secondary-color;
+  --fa-secondary-color: fade(@secondary-color, 55%);
+  --fa-secondary-opacity: 1;
+}
+
+/* 移动端位置微调 */
+@media (max-width: 600px) {
+  .UserCard .UserCard-avatar .stats-btn-popover { bottom: -6px; }
+}
 
 
