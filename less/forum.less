@@ -138,16 +138,12 @@ p.stat-desc {
   --fa-secondary-opacity: 1;
 }
 
-/* =========================
-   追加：按钮定位与配色（覆盖旧规则）
-   ========================= */
-
-/* 原位插入法依赖绝对定位，保持原始坐标 */
+/* ========= 保持原插件的定位数值（桌面/弹出卡/移动端） ========= */
 .stats-btn-popover {
-  left: 50%;
-  transform: translateX(-50%);
-  top: auto;
-  bottom: -10px;
+  position: absolute;
+  left: 46px;     /* 原实现：桌面布局的 X（可按你的主题微调） */
+  top: 145px;     /* 原实现：桌面布局的 Y（可按你的主题微调） */
+  z-index: 30;
 
   width: 40px;
   height: 40px;
@@ -155,8 +151,8 @@ p.stat-desc {
   display: grid;
   place-items: center;
 
-  /* 避免 @body-color 未定义，使用更稳的中性色背景 */
-  background: mix(@body-bg, @text-color, 8%);
+  /* 你要求：按钮底板=站点副色 */
+  background: @secondary-color;
   box-shadow: 0 2px 8px rgba(0,0,0,.18);
   cursor: pointer;
   transition: transform .12s ease, box-shadow .12s ease;
@@ -166,30 +162,25 @@ p.stat-desc {
   box-shadow: 0 6px 16px rgba(0,0,0,.22);
 }
 
-/* FA 图标尺寸与配色（只影响按钮，不改全站） */
-.stats-btn-popover .stats-btn-icon {
-  font-size: 22px;
-  line-height: 1;
-  color: @secondary-color;  // 仅按钮用站点副色
+/* 按钮里的 FA 图标=站点主色（solid/regular 走 color） */
+.stats-btn-popover .stats-btn-icon { 
+  font-size: 20px; 
+  line-height: 1; 
+  color: @primary-color; 
 }
+/* Duotone 两层都用主色（保持纯主色视觉） */
 .stats-btn-popover .stats-btn-icon.fa-duotone {
-  --fa-primary-color:   @secondary-color;
-  --fa-secondary-color: fade(@secondary-color, 55%);
+  --fa-primary-color:   @primary-color;
+  --fa-secondary-color: @primary-color;
   --fa-secondary-opacity: 1;
 }
 
-/* Popover 名片里备用位置（保持原实现） */
-.UserCard--popover .stats-btn-popover {
-  left: 1px;
-  top: 120px;
-}
+/* Popover 名片里的备用位置（保留原插件） */
+.UserCard--popover .stats-btn-popover { left: 10px; top: 120px; }
 
-/* 移动端位置（保持原实现的“左上角”思路） */
+/* 移动端位置（保留原插件） */
 @media (max-width: 600px) {
-  .stats-btn-popover {
-    left: 2%;
-    top: 2%;
-  }
+  .stats-btn-popover { left: 2%; top: 2%; }
 }
 
 
