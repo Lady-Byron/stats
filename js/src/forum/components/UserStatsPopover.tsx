@@ -1,23 +1,25 @@
 // @ts-nocheck
-import Component, {ComponentAttrs} from "flarum/common/Component";
-import Mithril from "mithril";
-import app from 'flarum/forum/app'
-import StatsModal from "./StatsModal/StatsModal";
+import Component from 'flarum/common/Component';
+import app from 'flarum/forum/app';
+import StatsModal from './StatsModal/StatsModal';
 
 export default class UserStatsPopover extends Component {
-  oninit(vnode: Mithril.Vnode<ComponentAttrs, this>) {
-    super.oninit(vnode);
-  }
-
   openModal() {
     app.modal.show(StatsModal, { user: this.attrs.user });
   }
 
-  view(): Mithril.Children {
+  view() {
     return (
-      <div className="stats-btn-popover" onclick={() => this.openModal()} aria-label="Open stats" role="button" tabindex="0"
-           onkeydown={(e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') this.openModal(); }}>
-        {/* 使用 Font Awesome —— 可换任意图标类，如 fa-duotone fa-chart-simple 等 */}
+      <div
+        className="stats-btn-popover"
+        role="button"
+        aria-label="Open stats"
+        tabindex="0"
+        onclick={() => this.openModal()}
+        onkeydown={(e) => ((e.key === 'Enter' || e.key === ' ') && this.openModal())}
+      >
+        {/* 用 Font Awesome（含 Pro Duotone 均可） */}
+        {/* 换你喜欢的类名：fa-duotone fa-chart-simple / fa-solid fa-chart-line … */}
         <i class="fa-duotone fa-solid fa-star-shooting" aria-hidden="true"></i>
       </div>
     );
