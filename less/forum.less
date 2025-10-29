@@ -142,44 +142,35 @@ p.stat-desc {
    追加：按钮定位与配色（覆盖旧规则）
    ========================= */
 
-/* 头像容器相对定位，供按钮绝对定位参照 */
-.UserCard .UserCard-avatar { position: relative; }
-
-/* 新按钮：水平居中，略偏下 */
-.UserCard .UserCard-avatar .stats-btn-popover {
-  position: absolute;
+/* 原位插入法依赖绝对定位，保持原始坐标 */
+.stats-btn-popover {
   left: 50%;
   transform: translateX(-50%);
-  bottom: -10px;              /* 负值=头像外侧稍下；正值=头像内侧靠下 */
-  z-index: 2;
+  top: auto;
+  bottom: -10px;
 
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   display: grid;
   place-items: center;
+
+  /* 避免 @body-color 未定义，使用更稳的中性色背景 */
   background: mix(@body-bg, @text-color, 8%);
   box-shadow: 0 2px 8px rgba(0,0,0,.18);
   cursor: pointer;
   transition: transform .12s ease, box-shadow .12s ease;
 }
-
-/* 悬浮卡中的微调 */
-.UserCard--popover .UserCard-avatar .stats-btn-popover {
-  bottom: -8px;
+.stats-btn-popover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.22);
 }
 
-/* 悬浮交互 */
-.UserCard .UserCard-avatar .stats-btn-popover:hover {
-  transform: translateX(-50%) translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.20);
-}
-
-/* 按钮内 FA 图标尺寸与副色 */
+/* FA 图标尺寸与配色（只影响按钮，不改全站） */
 .stats-btn-popover .stats-btn-icon {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
-  color: @secondary-color;
+  color: @secondary-color;  // 仅按钮用站点副色
 }
 .stats-btn-popover .stats-btn-icon.fa-duotone {
   --fa-primary-color:   @secondary-color;
@@ -187,9 +178,19 @@ p.stat-desc {
   --fa-secondary-opacity: 1;
 }
 
-/* 移动端位置微调 */
-@media (max-width: 600px) {
-  .UserCard .UserCard-avatar .stats-btn-popover { bottom: -6px; }
+/* Popover 名片里备用位置（保持原实现） */
+.UserCard--popover .stats-btn-popover {
+  left: 1px;
+  top: 120px;
 }
+
+/* 移动端位置（保持原实现的“左上角”思路） */
+@media (max-width: 600px) {
+  .stats-btn-popover {
+    left: 2%;
+    top: 2%;
+  }
+}
+
 
 
