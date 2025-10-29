@@ -1,15 +1,14 @@
 // @ts-nocheck
-import Component, {ComponentAttrs} from "flarum/common/Component";
-import Mithril from "mithril";
-import app from 'flarum/forum/app'
-import LoadingIndicator from 'flarum/common/components/LoadingIndicator'
-import User from "flarum/common/models/User";
-import {ApiResponse, BaseStat, UserStat} from "./types";
-import EditModal from "./EditModal/EditModal";
-import SingleUserStat from "./SingleUserStat";
+import Component, { ComponentAttrs } from 'flarum/common/Component';
+import Mithril from 'mithril';
+import app from 'flarum/forum/app';
+import User from 'flarum/common/models/User';
+import { ApiResponse, BaseStat, UserStat } from './types';
+import EditModal from './EditModal/EditModal';
+import SingleUserStat from './SingleUserStat';
 
 interface UserStatsAttrs {
-  user: User
+  user: User;
 }
 
 export default class UserStats extends Component<UserStatsAttrs> {
@@ -22,68 +21,66 @@ export default class UserStats extends Component<UserStatsAttrs> {
   }
 
   view(vnode: Mithril.Vnode<ComponentAttrs, this>): Mithril.Children {
-    if (!this.userStat) {
-      return <div></div>;
-    }
+    if (!this.userStat) return <div></div>;
 
     const { data } = this.attrs.user;
+    const a = (data && data.attributes) || {};
+    const has = (k: string) => Object.prototype.hasOwnProperty.call(a, k);
 
-    // Money（保持不变）
-    const moneyName = app.translator.trans('justoverclock-stats.forum.moneyName');
-    const userMoney = data.attributes.money ?? 0;
-    const moneyImg = `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/money1.png`;
+    // 名称（可根据需要换成翻译键）
+    const moneyName = app.translator.trans('justoverclock-stats.forum.moneyName') || 'Money';
+    const topicsName = 'Topics';
+    const repliesName = 'Replies';
+    const followingName = 'Following';
+    const followersName = 'Followers';
+    const expName = 'EXP';
 
-    // Stories（改为可选：只有当 storyCount 存在且非 null/undefined 时才渲染）
-    const storiesName = app.translator.trans('justoverclock-stats.forum.storyCount');
-    const hasStoriesAttr = Object.prototype.hasOwnProperty.call(data.attributes || {}, 'storyCount')
-                           && data.attributes.storyCount !== null
-                           && data.attributes.storyCount !== undefined;
-    const userStoriesCount = hasStoriesAttr ? data.attributes.storyCount : 0;
-    const storiesImg = `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/storiespng.png`;
+    // 图标：Money 继续用原有图片；其它为可选（此处不强制提供图）
+    const moneyImg =
+      app.forum.attribute('justoverclock-stats.moneyImg') ||
+      `${app.forum.attribute('baseUrl')}/assets/extensions/justoverclock-stats/money1.png`;
 
-    const canEditStats: boolean = data.attributes?.canEditStats;
+    const canEditStats: boolean = !!a.canEditStats;
+
+    // 只读内建统计（存在即显示；不去后端取）
+    const builtin: Array<{ name: string; value: number | string; img?: string }> = [];
+
+    if (has('money')) builtin.push({ name: moneyName, value: a.money ?? 0, img: moneyImg });
+    if (has('discussionCount')) builtin.push({ name: topicsName, value: a.discussionCount ?? 0 });
+    if (has('commentCount')) builtin.push({ name: repliesName, value: a.commentCount ?? 0 });
+    if (has('followingCount')) builtin.push({ name: followingName, value: a.followingCount ?? 0 });
+    if (has('followerCount')) builtin.push({ name: followersName, value: a.followerCount ?? 0 });
+    if (has('exp')) builtin.push({ name: expName, value: a.exp ?? 0 }); // 只收纳 EXP，不隐藏/不干涉 expLevel
 
     return (
-      <div className='show-stats-wrapper'>
-        <div className='user-stats-fe show-stats-container'>
-          {/* Money 一直显示 */}
-          <SingleUserStat
-            name={moneyName}
-            img={app.forum.attribute('justoverclock-stats.moneyImg') || moneyImg}
-            alt={moneyName}
-            value={userMoney}
-          />
+      <div className="show-stats-wrapper">
+        <div className="user-stats-fe show-stats-container">
+          {/* 内建只读项 */}
+          {builtin.map((it) => (
+            <SingleUserStat name={it.name} img={it.img} value={it.value} />
+          ))}
 
-          {/* Stories：只有在属性存在时才显示（从而解除对 profile-stories 的必需依赖） */}
-          {hasStoriesAttr && (
-            <SingleUserStat
-              name={storiesName}
-              img={app.forum.attribute('justoverclock-stats.storiesImg') || storiesImg}
-              alt={storiesName}
-              value={userStoriesCount}
-            />
-          )}
+          {/* 可编辑的自定义 BaseStats（原实现保持） */}
+          {this.userStat.data &&
+            this.userStat.data.map((stat: UserStat) => {
+              const baseStat: BaseStat | null | undefined =
+                this.userStat &&
+                this.userStat.included.find(
+                  (baseStat) => baseStat.id.toString() === stat.attributes.baseStatId.toString()
+                );
+              const imgPath = baseStat ? baseStat.attributes.img : '';
 
-          {/* 自定义 BaseStats（保持不变） */}
-          {this.userStat.data && this.userStat.data.map((stat: UserStat) => {
-            const baseStat: BaseStat | null | undefined =
-              this.userStat && this.userStat.included.find(
-                baseStat => baseStat.id.toString() === stat.attributes.baseStatId.toString()
+              return (
+                <SingleUserStat
+                  name={baseStat?.attributes.name}
+                  img={imgPath}
+                  value={stat.attributes.value}
+                  onclick={() => {
+                    canEditStats ? this.openEditModal(stat, baseStat, this.attrs.user) : null;
+                  }}
+                />
               );
-            const imgPath = baseStat ? baseStat.attributes.img : "";
-
-            return (
-              <SingleUserStat
-                name={baseStat?.attributes.name}
-                img={imgPath}
-                alt={baseStat?.attributes.name}
-                value={stat.attributes.value}
-                onclick={() => {
-                  canEditStats ? this.openEditModal(stat, baseStat, this.attrs.user) : null;
-                }}
-              />
-            );
-          })}
+            })}
         </div>
       </div>
     );
@@ -94,33 +91,37 @@ export default class UserStats extends Component<UserStatsAttrs> {
       stat,
       baseStat,
       user,
-      editUserStat: this.editUserStat.bind(this)
-    })
+      editUserStat: this.editUserStat.bind(this),
+    });
   }
 
   editUserStat(id: string | number, newValue: string | number) {
-    app.request({
-      method: 'PATCH',
-      url: `${app.forum.attribute('apiUrl')}/user-stats/${id}`,
-      body: {
-        data: {
-          attributes: {
-            value: Number(newValue)
-          }
-        }
-      }
-    }).then(() => {
-      app.alerts.show({type: 'success'}, app.translator.trans('justoverclock-stats.forum.successStatEdited'))
-    })
+    app
+      .request({
+        method: 'PATCH',
+        url: `${app.forum.attribute('apiUrl')}/user-stats/${id}`,
+        body: {
+          data: {
+            attributes: {
+              value: Number(newValue),
+            },
+          },
+        },
+      })
+      .then(() => {
+        app.alerts.show({ type: 'success' }, app.translator.trans('justoverclock-stats.forum.successStatEdited'));
+      });
   }
 
   getUserStat() {
-    app.request({
-      method: 'GET',
-      url: `${app.forum.attribute('apiUrl')}/user-stats/${this.attrs.user.data.id}`,
-    }).then(res => {
-      this.userStat = res as ApiResponse;
-      m.redraw()
-    })
+    app
+      .request({
+        method: 'GET',
+        url: `${app.forum.attribute('apiUrl')}/user-stats/${this.attrs.user.data.id}`,
+      })
+      .then((res) => {
+        this.userStat = res as ApiResponse;
+        m.redraw();
+      });
   }
 }
