@@ -55,23 +55,27 @@
   }
 }
 
-/* ====== 在用户卡片隐藏：money / topics / replies / following / followers ====== */
-/* 保留 expLevel（不加入选择器） */
+/* ====== 在用户卡片隐藏以下 5 项：money / topics / replies / following / followers ====== */
+/* 保留 expLevel（不隐藏） */
 .UserCard-profile {
   ul.UserCard-info {
-    /* money：原有 */
+    /* money（原本已隐藏） */
     li.item-money { display: none; }
-    /* stories：如已不用，可保留不影响 */
+    /* stories（如未使用可忽略） */
     li.item-storiesCount { display: none; }
 
-    /* 核心：主题与回复（Flarum 核心 infoItems 键一般是 discussions / posts） */
+    /* 主题 / 回复：根据你现场的实际类名 */
+    li.item-discussion-count { display: none; }  /* ← 新增：你截图里的类名 */
+    li.item-comment-count    { display: none; }  /* ← 新增：你截图里的类名 */
+    /* 兼容其他主题/扩展可能的键名 */
     li.item-discussions { display: none; }
-    li.item-posts { display: none; }
+    li.item-posts       { display: none; }
 
-    /* 关注/粉丝：不同扩展命名略有差异，常见 followers / following。
-       这里同时做一个宽松的兜底匹配：包含 'item-follow' 的都隐藏。 */
+    /* 关注/粉丝：尽量宽松匹配，覆盖不同扩展的命名 */
     li.item-followers,
     li.item-following,
+    li.item-follower-count,
+    li.item-following-count,
     li[class*='item-follow'] { display: none; }
   }
 }
@@ -86,14 +90,9 @@ p.stat-desc {
   margin-bottom: 0;
 }
 
-.stat {
-  color: @primary-color;
-}
+.stat { color: @primary-color; }
 
-.stats-svg {
-  width: 40px;
-  height: 40px;
-}
+.stats-svg { width: 40px; height: 40px; }
 
 .stats-btn-popover {
   position: absolute;
@@ -103,28 +102,14 @@ p.stat-desc {
 }
 
 @media only screen and (max-width: 600px) {
-  .stats-btn-popover {
-    position: absolute;
-    left: 2%;
-    top: 2%;
-  }
+  .stats-btn-popover { left: 2%; top: 2%; }
 }
 
-.stat-value {
-  text-align: center;
-}
+.stat-value { text-align: center; }
 
 .UserCard--popover {
-  .stats-btn-popover {
-    position: absolute;
-    left: 1px;
-    top: 120px;
-    cursor: pointer;
-  }
+  .stats-btn-popover { left: 1px; top: 120px; cursor: pointer; }
 }
 
-.darkenBackground {
-  .container {
-    position: relative;
-  }
-}
+.darkenBackground { .container { position: relative; } }
+
