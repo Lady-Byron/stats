@@ -8,8 +8,7 @@
     "license": "MIT",
     "require": {
         "flarum/core": "^1.2.0",
-        "antoinefr/flarum-ext-money": "*",
-        "justoverclock/profile-stories": "*"
+        "antoinefr/flarum-ext-money": "*"
     },
     "authors": [
         {
