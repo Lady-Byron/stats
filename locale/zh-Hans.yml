@@ -1,0 +1,26 @@
+justoverclock-stats:
+  admin:
+    permission:
+      editStat: 可以编辑用户统计
+    baseStatInputName: 统计项名称
+    moneyImgInputName: 五铢钱图标（URL）
+    storiesImgInputName: 故事图标（URL）
+    baseStatInputImg: 图像 URL
+    addStatBtn: 新建统计项
+    actualStatsTitle: 已创建的统计项：
+    successStatCreated: 统计项创建成功
+    failStatCreated: 创建统计项时发生错误
+    successStatDeleted: 统计项删除成功
+    failStatDeleted: 删除统计项时发生错误
+
+  forum:
+    moneyName: 五铢钱
+    storiesName: 故事
+    storyCount: 故事
+    topics: 主题
+    replies: 回复
+    following: 关注
+    followers: 粉丝
+    successStatEdited: 统计项已更新
+    save: 保存
+    editStatInputPlaceholder: 请输入数值
