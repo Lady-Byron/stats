@@ -20,7 +20,7 @@ export default class UserStatsPopover extends Component {
       >
         {/* 用 Font Awesome（含 Pro Duotone 均可） */}
         {/* 换你喜欢的类名：fa-duotone fa-chart-simple / fa-solid fa-chart-line … */}
-        <i class="fa-duotone fa-solid fa-star-shooting" aria-hidden="true"></i>
+        <i class="fa-duotone fa-solid fa-star" aria-hidden="true"></i>
       </div>
     );
   }
