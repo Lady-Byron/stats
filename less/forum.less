@@ -138,45 +138,76 @@ p.stat-desc {
   --fa-secondary-opacity: 1;
 }
 
-/* 小号长方形按钮 */
-.stats-btn-popover {
+/* === Stats 按钮（打包用固定像素版）=== */
+
+/* 桌面端：普通用户卡片 */
+.UserCard .stats-btn-popover {
   position: absolute;
-  left: 46px;      // 你当前的定位，如需微调再改
-  top: 145px;
+  left: 47px;
+  top: 150px;
   z-index: 30;
 
-  width: 52px;     // ← 从 64 缩到 52
-  height: 32px;    // ← 从 40 缩到 32
-  border-radius: 10px;    // 如果要“胶囊”外观可用 9999px
+  width: 40px;
+  height: 24px;
+  border-radius: 10px;
+
   display: grid;
   place-items: center;
 
-  background: @primary-color;        // 背景=主色（保持不变）
+  background: @primary-color;          /* 按钮背景 = 站点主色 */
   box-shadow: 0 2px 8px rgba(0,0,0,.18);
   cursor: pointer;
-  transition: transform .12s ease, box-shadow .12s ease;
 }
-.stats-btn-popover:hover {
+
+/* 桌面端：悬浮名片（.UserCard--popover） */
+.UserCard--popover .stats-btn-popover {
+  left: 52px;
+  top: 130px;
+}
+
+.UserCard .stats-btn-popover:hover,
+.UserCard--popover .stats-btn-popover:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(0,0,0,.22);
 }
 
-/* 图标也相应缩小一点 */
+/* 图标：桌面端 */
 .stats-btn-popover .stats-btn-icon {
-  font-size: 20px;   // ← 从 24 缩到 20
+  font-size: 18px;     /* 桌面图标大小 */
   line-height: 1;
-  color: #fff;
+  color: #fff;         /* 单层图标为白色，保证与主色背景对比 */
 }
+/* Duotone 两层颜色（桌面端） */
 .stats-btn-popover .stats-btn-icon.fa-duotone {
   --fa-primary-color:   #fff;
-  --fa-secondary-color: fade(#fff, 70%);
+  --fa-secondary-color: rgba(255,255,255,.7);
   --fa-secondary-opacity: 1;
 }
 
-/* 移动端再小一号（可选） */
-@media (max-width: 600px) {
-  .stats-btn-popover { width: 48px; height: 30px; }
-  .stats-btn-popover .stats-btn-icon { font-size: 18px; }
+/* 移动端（≤768px）：水平居中 + 固定 top，避免随屏宽漂移 */
+@media (max-width: 768px) {
+  .UserCard .stats-btn-popover {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 85px !important;
+
+    width: 32px !important;
+    height: 24px !important;
+    border-radius: 10px;
+  }
+
+  /* 移动端图标大小（兼容 SVG / webfont） */
+  .stats-btn-popover,
+  .stats-btn-popover .stats-btn-icon,
+  .stats-btn-popover i,
+  .stats-btn-popover svg,
+  .stats-btn-popover .stats-btn-icon::before,
+  .stats-btn-popover .stats-btn-icon::after {
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+  .stats-btn-popover svg { height: 1em !important; width: auto !important; }
 }
+
 
 
